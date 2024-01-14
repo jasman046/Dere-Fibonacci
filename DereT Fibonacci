@@ -2,7 +2,7 @@ ORG 100H
 .MODEL SMALL
 .STACK 100H
 .DATA
-R DB 'ENTER RANGE: $'
+R DB 'MASUKAN BATAS: $'
 F DB 0
 S DB 1
 SUM DB ?
@@ -12,17 +12,17 @@ FAB DB 13, 10, 13, 10, '***FABANOCCI SERIES***$'
 MAIN PROC
 
     MOV DX, OFFSET R
-    MOV AH, 9 ; PRINTING A STRING
+    MOV AH, 9 ; CETAK STRING
     INT 21H                               
 
-    ; INPUT CODE STARTS HERE
+    ; MEMULAI KODE INPUT 
     MOV N, 0    ; N = 0
     MOV BL, 10  ;BL = 10
     INPUT:
-    MOV AH, 1   ; TAKE INPUT
+    MOV AH, 1   ; MENGAMBIL INPUT
     INT 21H
     CMP AL, 13  ; IF(INPUT == ENTER) 
-    JE NEXT     ;JUMP EQUAL TO
+    JE NEXT     ;JUMP KE EQUAL 
     SUB AL, 30H
     MOV AH,0 
     MOV CX, AX  ;CX = AX
@@ -31,7 +31,7 @@ MAIN PROC
     ADD AX, CX  ;AX = AX + CX
     MOV N, AX   ; N = AX
     JMP INPUT
-    ;INPUT CODE ENDS HERE 
+    ;AKHIR KODE INPUT  
     
     NEXT:
     LEA DX, FAB
@@ -40,7 +40,6 @@ MAIN PROC
 
     MOV CX,N     ;CX = N
     L:
-
     PUSH CX 
     
     MOV DL, 10
@@ -55,7 +54,7 @@ MAIN PROC
     ADD BL, S    ;BL + S
     MOV SUM, BL  ;SUM = BL
 
-    ;OUTPUT CODE STARTS HERE
+    ;MEMULAI KODE OUTPUT 
     MOV AH,0     ; AH = 0
     MOV AL,SUM   ;AL = SUM
 
@@ -78,7 +77,7 @@ MAIN PROC
     INT 21H
     LOOP L2
 
-    ; OUTPUT CODE ENDS HERE
+    ; AKHIR KODE OUTPUT
 
     MOV BL,S    ; BL = S 
     MOV F,BL    ;F = BL
